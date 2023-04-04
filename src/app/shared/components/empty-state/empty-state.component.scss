@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.no-matches {
+  max-width: 264px;
+  height: 100%;
+  margin: 0 auto;
+
+  .no-matches-image {
+    margin-bottom: 16px;
+  }
+
+  .no-matches-title {
+    margin-bottom: 0;
+  }
+
+  .no-matches-text {
+    margin-top: 8px;
+  }
+}

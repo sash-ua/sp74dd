@@ -1,0 +1,47 @@
+<div class="container">
+  <div rtl>
+    <h2 class="main-heading">{{ 'stms.patients.title' | translate }}</h2>
+    <div *ngIf="(patientsFavorites$ | async)?.length; else noData">
+      <mat-form-field>
+        <mat-label>{{ 'stms.menu.search' | translate }}</mat-label>
+        <input type="text" matInput [formControl]="patientsSearchFormControl">
+      </mat-form-field>
+
+      <ng-container *ngIf="(patientsFavorites$ | async)">
+        <st-table
+            [data]="patientsFilteredFavorites$ | async"
+            [favoriteIds]="patientsFavoriteIds$ | async"
+            [tableConfig]="patientsTableConfig"
+            [itemIdColumn]="'code'"
+            (removeFromFavorite)="onRemovePatientsFromFavorite($event)"
+        ></st-table>
+      </ng-container>
+    </div>
+  </div>
+
+  <div rtl class="wrapper">
+    <h2 class="main-heading">{{ 'stms.orders.title' | translate }}</h2>
+    <div *ngIf="(ordersFavorites$ | async)?.length; else noData">
+      <mat-form-field>
+        <mat-label>{{ 'stms.menu.search' | translate }}</mat-label>
+        <input type="text" matInput [formControl]="ordersSearchFormControl">
+      </mat-form-field>
+
+      <ng-container *ngIf="(ordersFavorites$ | async)">
+        <st-table
+            [data]="ordersFilteredFavorites$ | async"
+            [favoriteIds]="ordersFavoriteIds$ | async"
+            [tableConfig]="ordersTableConfig"
+            [itemIdColumn]="'identifier'"
+            (removeFromFavorite)="onRemoveOrdersFromFavorite($event)"
+        ></st-table>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #noData>
+  <st-empty-state
+      [detailedTitle]="'stms.orders.no-favorites' | translate"
+  ></st-empty-state>
+</ng-template>

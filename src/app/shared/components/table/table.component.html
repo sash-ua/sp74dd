@@ -1,0 +1,27 @@
+<table mat-table [dataSource]="data" class="mat-elevation-z2 full-size-table" fixedLayout="true">
+
+  <ng-container *ngFor="let column of tableConfig" [matColumnDef]="column.value.id">
+    <th mat-header-cell *matHeaderCellDef>{{ column.label | translate}}</th>
+    <td mat-cell *matCellDef="let element">{{ element[column.value.id || column.value.fallback]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>{{'stms.orders.actions' | translate}}</th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container
+          *ngTemplateOutlet="favoriteIds[element[itemIdColumn]] ? removeFromFavorite : addToFavorite; context: {id: element[itemIdColumn]}">
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+
+<ng-template #addToFavorite let-id=id>
+  <button mat-stroked-button (click)="onAddToFavorite(id)">{{'stms.orders.to-favorite' | translate}}</button>
+</ng-template>
+<ng-template #removeFromFavorite let-id=id>
+  <button mat-stroked-button (click)="onRemoveFromFavorite(id)">{{'stms.orders.from-favorite' | translate}}</button>
+</ng-template>

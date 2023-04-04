@@ -1,0 +1,32 @@
+<div class="container">
+  <div rtl>
+    <h1 class="main-heading">{{ 'stms.patients.title' | translate }}</h1>
+    <div>
+      <a mat-raised-button class="actions-main" color="primary" (click)="onFetchPatients()">
+        {{ 'stms.patients.get-patients' | translate }}
+      </a>
+
+      <ng-container [ngTemplateOutlet]="(isLoading$ | async) ? spinner : table"></ng-container>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #table>
+  <ng-container *ngIf="(patients$ | async).length">
+    <st-table
+        [data]="patients$ | async"
+        [favoriteIds]="favoriteIds$ | async"
+        [tableConfig]="tableConfig"
+        [itemIdColumn]="'code'"
+        (addToFavorite)="onAddToFavorite($event)"
+        (removeFromFavorite)="onRemoveFromFavorite($event)"
+    ></st-table>
+  </ng-container>
+</ng-template>
+
+<ng-template #spinner>
+  <div class="spinner">
+    <mat-spinner class="lab-spinner" diameter="40" strokeWidth="3"></mat-spinner>
+  </div>
+</ng-template>
